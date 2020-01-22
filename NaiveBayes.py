@@ -73,27 +73,27 @@ class NaiveBayes:
                 else:
                     aid_word_count = self.count_class[(word, 'aid')]                # num occurences of word in 'aid'
                     all_aid_words = self.count_per_class['aid']                    # num 'aid' words
-                    cumprob_aid += math.log((aid_word_count +1)/(all_aid_words + len(self.vocab)))
+                    cumprob_aid += math.log((aid_word_count + 1)/(all_aid_words + len(self.vocab)))
                     
                     not_word_count = self.count_class[(word, 'not')]
                     all_not_words = self.count_per_class['not']
-                    cumprob_not += math.log((not_word_count +1)/(all_not_words + len(self.vocab)))
+                    cumprob_not += math.log((not_word_count + 1)/(all_not_words + len(self.vocab)))
                     
         elif self.USE_BIGRAMS == True: 
             words = ["<s>"] + words + ["</s"]       # add start/end signs
             
             for i in range(1, len(words)):
-                window = (words[i-1], words[i])
+                window = (words[i - 1], words[i])
                 if window not in self.vocab:
                     continue
                 if window in self.vocab:
                     aid_word_count = self.count_class[(window, 'aid')]
                     all_aid_words = self.count_per_class['aid']
-                    cumprob_aid += math.log((aid_word_count +1)/(all_aid_words + len(self.vocab)))
+                    cumprob_aid += math.log((aid_word_count + 1)/(all_aid_words + len(self.vocab)))
                     
                     not_word_count = self.count_class[(window, 'not')]
                     all_not_words = self.count_per_class['not']
-                    cumprob_not += math.log((not_word_count +1)/(all_not_words + len(self.vocab)))
+                    cumprob_not += math.log((not_word_count + 1)/(all_not_words + len(self.vocab)))
 
 
         if cumprob_not > cumprob_aid: return 'not'
@@ -125,7 +125,7 @@ class NaiveBayes:
         if self.USE_BIGRAMS == True:
             words = ["<s>"] + words + ["</s"]       # add start/end signs
             for i in range(1, len(words)):
-                window = (words[i-1], words[i])
+                window = (words[i - 1], words[i])
                 self.vocab.add(window)
                 self.count_class[(window, klass)] += 1
                 self.count_per_class[klass] += 1
